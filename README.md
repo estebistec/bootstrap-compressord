@@ -22,20 +22,27 @@ The purpose of this project is two-fold.
  * `python manage.py collectstatic --noinput`
  * `python manage.py runserver`
 
-## Running in "production" mode
+## Running an nginx "production" setup
 
-To preview a production setting
+Run the following command from the source root directory:
 
-  * Set `DEBUG = False` in `settings.py`
-  * `cp nginx.conf.template nginx.conf` and make necessary modifications
-  * `nginx -c $(pwd)/nginx.conf`
-  * `cd bootstrap_compressord`
-  * `python manage.py collectstatic --noinput`
-  * `python manage.py runserver`
+  * `./run-nginx.sh`
 
-To stop nginx: `nginx -s stop`
+This script will run collectstatic, fire up nginx as the current user based on
+a local conf, and then run the Django app behind it. nginx will server your
+static files. After your terminate the Django app, nginx will stop too.
 
 **NOTE** I run nginx on Mac OSX, as installed by [homebrew](http://mxcl.github.com/homebrew). YMMV on Linux or Windows.
+
+## Running an Amazon S3 "production" setup
+
+ * Create an S3 bucket to collect your static assets in and serve them from
+
+Then, from the source root directory:
+
+ * `S3KEY=XXX S3SECRET="XXX" S3BUCKET="mah-bukkit" ./run-s3.sh`
+ 
+Of course, substitute in your AWS key, secret, and bukkit, I mean, bucket!
 
 ## Updating Twitter Bootstrap
 
@@ -43,3 +50,6 @@ The Bootstrap git submodule can be updated as follows:
 
  * `cd bootstrap_compressord/twitter_bootstrap/static`
  * `git checkout v2.0.5 # Or other commit, preferably a release tag`
+ * `cd ../..`
+ * `git add bootstrap_compressord/twitter_bootstrap/static`
+ * `git commit -m "Upgrade twitter bootstrap to 2.0.5"`
