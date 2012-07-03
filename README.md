@@ -19,8 +19,8 @@ The purpose of this project is two-fold.
 ## Running in development mode
 
  * `cd bootstrap_compressord`
- * `python manage.py collectstatic --noinput`
- * `python manage.py runserver`
+ * `./manage.py collectstatic --noinput`
+ * `./manage.py runserver`
 
 ## Running an nginx "production" setup
 
